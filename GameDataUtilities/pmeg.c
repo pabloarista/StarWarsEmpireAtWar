@@ -1,11 +1,12 @@
-// MegFileExtractor.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <windows.h>
 #include "pmeg.h"
 #include "pfile.h"
 #include "plinked_list.h"
+#include <wchar.h>
+#include <string.h>
 /*
 taken from: https://www.tibed.net/editing/empireatwar/megafiles
 The container file format used by Star Wars: Empire at War is called MegaFiles. It uses the file extension MEG or .MEG. Other container file formats are ZIP and RAR, for example. However, the MEG file format does not use compression; all files are stored uncompressed inside the MEG file. A game typically consists of thousands or tens of thousands files, and by placing them into a single file, the installation times of games can be decreased. Also, the loading times of games will decrease because a single big file will be stored in a consecutive area on the hard disk, instead of the random placement that could occur with thousands of small files.
