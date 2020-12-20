@@ -15,8 +15,11 @@ This project is also in pure C. I have seen CLIs out there that I'm not too sure
 I don't expect anyone to jump in and help, but even if people fork this would be great. I think also in the future there could be integration with other things other than the XML and strings. A rough idea would be as follows:
 
 Milestone 1: XML/Strings
+
 Milestone 2: integration with audio
+
 Milestone 3: integration with images
+
 Milestone 4: integration with video
 
 There could be more, but for now that's it. This file will be updated in the future.
