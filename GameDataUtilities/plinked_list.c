@@ -87,7 +87,7 @@ bool plinked_list_did_remove_head(struct plinked_list* ll) {
     return did_remove;
 }
 bool plinked_list_did_remove_tail(struct plinked_list* ll) {
-    bool did_remove;
+    bool did_remove = false;
     if(ll && (*ll).tail) {
         struct pnode* t = (*ll).tail;
         struct pnode* current = (*ll).head;
@@ -99,9 +99,7 @@ bool plinked_list_did_remove_tail(struct plinked_list* ll) {
                 break;
             }//if
         }//while
-    } else {
-        did_remove = false;
-    }//else
+    }//if
 
     return did_remove;
 }
