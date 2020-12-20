@@ -1,5 +1,6 @@
 # StarWarsEmpireAtWar
 Sunday, 20 December 2020
+
 This project was created to facilitate in modding Star Wars Empire At War. The motiviation for this project was that dealing with XML files by hand and linking them and trying to understand can be a lot of work. While being fun, there's room for error.
 
 The repo is split into 3 projects: CLI, GUI, DLL
