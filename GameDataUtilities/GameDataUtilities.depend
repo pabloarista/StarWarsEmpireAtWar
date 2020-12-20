@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1608179454 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\main.c
+	"main.h"
+
+1608179446 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\main.h
+	<windows.h>
+
+1608182593 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\peawutilities.c
+	"peawutilities.h"
+
+1608361549 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\peawutilities.h
+	<windows.h>
+	"pdll.h"
+
+1608462759 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pmeg.c
+	<stdio.h>
+	<stdbool.h>
+	<windows.h>
+	"pmeg.h"
+	"pfile.h"
+	"plinked_list.h"
+
+1608264531 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdat.c
+	"pdat.h"
+
+1608264440 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdat.h
+
+1608434000 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pfile.c
+	"pfile.h"
+	<string.h>
+	<stdlib.h>
+
+1608279176 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pfile.h
+	<stdio.h>
+	<stdbool.h>
+
+1608373192 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pnode.c
+	"pnode.h"
+	<stdlib.h>
+
+1608355044 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pnode.h
+
+1608371429 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\plinked_list.c
+	"plinked_list.h"
+	<stdlib.h>
+
+1608358694 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\plinked_list.h
+	"pnode.h"
+	<stdbool.h>
+
+1608362052 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pmeg.h
+	"pdll.h"
+
+1608361517 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdll.h
+

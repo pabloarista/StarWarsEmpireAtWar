@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1608376115 source:c:\users\beth\source\repos\starwarsempireatwar\empireatwarcli\main.c
+	<stdio.h>
+	<stdlib.h>
+	"pmeg.h"
+	<conio.h>
+	<signal.h>
+	<errno.h>
+	<string.h>
+
+1608362052 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pmeg.h
+	"pdll.h"
+
+1608361517 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdll.h
+

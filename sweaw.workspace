@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="GameDataUtilities/GameDataUtilities.cbp" />
+		<Project filename="EmpireAtWarStudio/EmpireAtWarStudio.cbp">
+			<Depends filename="GameDataUtilities/GameDataUtilities.cbp" />
+		</Project>
+		<Project filename="EmpireAtWarCLI/EmpireAtWarCLI.cbp">
+			<Depends filename="GameDataUtilities/GameDataUtilities.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

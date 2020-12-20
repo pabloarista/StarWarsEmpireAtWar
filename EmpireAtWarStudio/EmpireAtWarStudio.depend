@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1584201822 source:c:\users\beth\source\repos\starwarsempireatwar\empireatwarstudio\main.cpp
+	<tchar.h>
+	<windows.h>
+
+1608182803 source:c:\users\beth\source\repos\starwarsempireatwar\empireatwarstudio\main.c
+	<tchar.h>
+	<windows.h>
+	"peawutilities.h"
+
+1608181296 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\peawutilities.h
+	<windows.h>
+

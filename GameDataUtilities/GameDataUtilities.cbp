@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GameDataUtilities" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/GameDataUtilities" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy bin\Debug\GameDataUtilities.dll ..\EmpireAtWarStudio\bin\Debug\" />
+					<Add after="cmd /c copy bin\Debug\GameDataUtilities.dll ..\EmpireAtWarCLI\bin\Debug\" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/GameDataUtilities" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="user32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy bin\Release\GameDataUtilities.dll ..\EmpireAtWarStudio\bin\Release\" />
+					<Add after="cmd /c copy bin\Release\GameDataUtilities.dll ..\EmpireAtWarCLI\bin\Release\" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="pdat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pdat.h" />
+		<Unit filename="pdll.h" />
+		<Unit filename="peawutilities.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="peawutilities.h">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pfile.h" />
+		<Unit filename="plinked_list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="plinked_list.h" />
+		<Unit filename="pmeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pmeg.h" />
+		<Unit filename="pnode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pnode.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
