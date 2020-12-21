@@ -97,7 +97,7 @@ int pmeg_process_internal(char* full_path) {
     unsigned int file_name_count;
     pos += sizeof(file_name_count);
 
-    ssize_t bytes_read = fread(&file_name_count, sizeof(file_name_count), 1, fp);
+    size_t bytes_read = fread(&file_name_count, sizeof(file_name_count), 1, fp);
     if(!bytes_read) {
         pfile_destroy(&pf);
         perror("error reading file!\n");
@@ -190,11 +190,13 @@ int pmeg_process_internal(char* full_path) {
 
         struct plinked_list* paths = split_path(file_name);
         if (plinked_list_is_empty(paths)) {
+            plinked_list_destroy(&paths);
             pfile_destroy(&pf);
             printf("error splitting paths for %s\n", file_name);
             return -1;
         }//if
         bool did_create_paths = did_create_path(paths, (*pf).root_path);
+        plinked_list_destroy(&paths);
         if (!did_create_paths) {
             pfile_destroy(&pf);
             return -1;
@@ -205,33 +207,44 @@ int pmeg_process_internal(char* full_path) {
             perror(0);
             return -1;
         }//if
-
-        *(buffer + file_size) = 0;
         rewind(fp);
         fseek(fp, file_offset, SEEK_SET);
 
-        if(!fread(buffer, sizeof *buffer, file_size, fp)) {
+        bytes_read = fread(buffer, sizeof *buffer, file_size, fp);
+        int ferr = ferror(fp);
+        int fend = feof(fp);
+        bool read_eq = bytes_read == file_size;
+        if(ferr || fend || !read_eq || !bytes_read) {
+            if(ferr) puts("ferror!");
+            if(fend) puts("end of file reached!");
+            if(!read_eq) puts("read NOT equal!");
+            if(!bytes_read) puts("NO bytes read!");
             free(buffer);
             pfile_destroy(&pf);
             perror(0);
             return -1;
         }//if
+        *(buffer + file_size) = 0;
+
         size_t n_path = strlen((*pf).root_path) + strlen(file_name);
-        char* path = (char*)malloc(sizeof *path * (n_path + 1));
-        if(!path) {
+        char* path_write = (char*)malloc(sizeof *path_write * (n_path + 1));
+        if(!path_write) {
             free(buffer);
             perror("out of memory!");
             pfile_destroy(&pf);
             return -1;
         }//if
-        sprintf(path, "%s%s", (*pf).root_path, file_name);
-
-        printf("open to write file: %s (len=%d)\n", path, n_path);
-        FILE *fp_w = fopen(path, "wb");
+        printf("ptr addr=%p\n", &path_write);
+        printf("n=%d\n", sizeof *path_write * (n_path + 1));
+        sprintf(path_write, "%s%s", (*pf).root_path, file_name);
+        printf("open to write file: %s (len=%d)\n", path_write, n_path);
+        FILE *fp_w = fopen(path_write, "wb");
         puts("opened for writing");
-        free(path);
+        printf("ptr addr=%p\n", &path_write);
+        puts("free path");
+        free(path_write);
         puts("path freed");
-        path = 0;
+        path_write = 0;
         puts("path 0'd\nwrite...");
         if(!fp_w || !fwrite(buffer, sizeof *buffer, file_size, fp_w)) {
             free(buffer);

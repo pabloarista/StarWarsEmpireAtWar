@@ -9,23 +9,37 @@
 #include <errno.h>
 #include <string.h>
 #include <windows.h>
-
-void abort_handler(int code) {
-    //perror(0);
+void print_err(char* signal, int code, char* desc) {
+    printf("signal %s (%d) - %s - was triggered\n", signal, code, desc);
+}
+void signal_handler(int code) {
     int errnum = errno;
-    fprintf(stderr, "Value of errno: %d\n", errno);
-    perror("Error printed by perror");
-    fprintf(stderr, "Error opening file: %s\n", strerror( errnum ));
-    printf("signal %d was triggered\n", code);
+    fprintf(stderr, "Error #%d:\t", errnum);
+    perror(0);
+    switch(code) {
+        case SIGINT: print_err("SIGINT", code, "Interactive attention"); break;
+        case SIGILL: print_err("SIGILL", code, "Illegal instruction"); break;
+        case SIGFPE: print_err("SIGFPE", code, "Floating point error"); break;
+        case SIGSEGV: print_err("SIGSEGV", code, "Segmentation violation"); break;
+        case SIGTERM: print_err("SIGTERM", code, "Termination request"); break;
+        case SIGBREAK: print_err("SIGBREAK", code, "Control-break"); break;
+        case SIGABRT: print_err("SIGABRT", code, "Abnormal termination (abort)"); break;
+        default: print_err("Unknown signal", code, "?"); break;
+    }//switch
 #if TEST
     printf("press any key to quit");
     getch();
-#endif
+#endif // TEST
+    exit(-1);
 }
 int main(int argc, char** argv) {
-    signal(SIGABRT, abort_handler);
-    signal(SIGTERM, abort_handler);
-    signal(SIGSEGV, abort_handler);
+    signal(SIGINT, signal_handler);
+    signal(SIGILL, signal_handler);
+    signal(SIGFPE, signal_handler);
+    signal(SIGSEGV, signal_handler);
+    signal(SIGTERM, signal_handler);
+    signal(SIGBREAK, signal_handler);
+    signal(SIGABRT, signal_handler);
 #if !TEST
 #warning TODO:we could other options: 1) add file to meg file 2) create meg file with a list of files or a directory to add
     if (argc < 2) {

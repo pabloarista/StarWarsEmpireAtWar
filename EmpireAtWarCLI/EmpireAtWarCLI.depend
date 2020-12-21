@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1608376115 source:c:\users\beth\source\repos\starwarsempireatwar\empireatwarcli\main.c
+1608512611 source:c:\users\beth\source\repos\starwarsempireatwar\empireatwarcli\main.c
 	<stdio.h>
 	<stdlib.h>
 	"pmeg.h"
@@ -7,9 +7,10 @@
 	<signal.h>
 	<errno.h>
 	<string.h>
+	<windows.h>
 
-1608362052 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pmeg.h
+1608464290 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pmeg.h
 	"pdll.h"
 
-1608361517 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdll.h
+1608464290 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdll.h
 
