@@ -42,23 +42,6 @@ int main(int argc, char** argv) {
     signal(SIGTERM, signal_handler);
     signal(SIGBREAK, signal_handler);
     signal(SIGABRT, signal_handler);
-/*
-    int i;
-    for(i = 0; i < 37; ++i) {
-        size_t n = i % 2 == 0 ? 100 : 50;
-        char* test = (char*)malloc(n);
-        if(test) {
-            strcpy(test, "hello world!");
-            puts(test);
-            free(test);
-        } else {
-            perror("out of memory");
-            exit(0);
-        }//else
-    }//for
-    puts("end");
-    exit(0);
-*/
 #if !TEST
 #warning TODO:we could other options: 1) add file to meg file 2) create meg file with a list of files or a directory to add
     if (argc < 2) {
