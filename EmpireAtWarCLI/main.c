@@ -10,12 +10,14 @@
 #include <string.h>
 #include <windows.h>
 void print_err(char* signal, int code, char* desc) {
-    printf("signal %s (%d) - %s - was triggered\n", signal, code, desc);
+    printf("%s (%d) - %s\n", signal, code, desc);
 }
 void signal_handler(int code) {
     int errnum = errno;
-    fprintf(stderr, "Error #%d:\t", errnum);
-    perror(0);
+        if(errnum) {
+        fprintf(stderr, "Error #%d:\t", errnum);
+        perror(0);
+    }//if
     switch(code) {
         case SIGINT: print_err("SIGINT", code, "Interactive attention"); break;
         case SIGILL: print_err("SIGILL", code, "Illegal instruction"); break;
@@ -60,8 +62,9 @@ int main(int argc, char** argv) {
 #endif
     int result = 0;
     pmeg_process(file_name, &result);
+#if TEST
     printf("Press any key to exit");
     getch();
-
+#endif
     return result;
 }

@@ -8,6 +8,4 @@
  *  in your project.
  */
 
-void DLL_EXPORT SomeFunction(const LPCSTR sometext);
-
 #endif // __P_EAW_UTILITIES_H__
