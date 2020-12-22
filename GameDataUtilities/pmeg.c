@@ -1,4 +1,3 @@
-#define USE_HEAP 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -10,7 +9,7 @@
 #include <string.h>
 #include <assert.h>
 /*
-taken from: https://www.tibed.net/editing/empireatwar/megafiles
+meg file definition taken from: https://www.tibed.net/editing/empireatwar/megafiles
 The container file format used by Star Wars: Empire at War is called MegaFiles. It uses the file extension MEG or .MEG. Other container file formats are ZIP and RAR, for example. However, the MEG file format does not use compression; all files are stored uncompressed inside the MEG file. A game typically consists of thousands or tens of thousands files, and by placing them into a single file, the installation times of games can be decreased. Also, the loading times of games will decrease because a single big file will be stored in a consecutive area on the hard disk, instead of the random placement that could occur with thousands of small files.
 
 Last update: March 22nd, 2006
@@ -65,7 +64,6 @@ Mike Lankamp deserves credit for thinking of CRC32 for the filename - this is ac
 static void destroy_str(void** val);
 static struct plinked_list* split_path(char* path);
 static bool did_create_path(struct plinked_list* paths, char* root_path);
-
 static int pmeg_process_internal(char* full_path);
 void DLL_EXPORT pmeg_process(char* full_path, int* code) {
     *code = pmeg_process_internal(full_path);
@@ -146,7 +144,6 @@ int pmeg_process_internal(char* full_path) {
         }//if
         //printf("current file name length:\t%u\n", file_name_len);
 
-//        unsigned short null_term_len = 1;
         char* file_name = (char*)malloc(sizeof *file_name * (file_name_len + 1));
         if(!file_name) {
             perror("out of memory!");
@@ -236,34 +233,6 @@ int pmeg_process_internal(char* full_path) {
         }//if
         *(buffer + file_size) = 0;
         size_t n_path = strlen((*pf).root_path) + strlen(file_name);
-/*
-    for some reason when allocating in the heap we get a segmentation fault when freeing if the num of bytes to allocate is less than 57 (approx),
-    but when using the stack this problem goes away.
-    we need to figure out why this is happening.
-    The code has been ran on memory analyzers and there doesn't appear to be any memory leaks
-    (but perhaps some expensive analyzers might find something. I used Xcode)
-    It could be some weird compiler bug.
-    For now using the stack or making a minimum of 57 bytes will work, but it's not the best solution
-*/
-#if !USE_HEAP
-        char path_write[4096];
-#else
-        //the range is 33 to 57 that causes a heap corruption (we are adding + 1 for the null pointer, thus 56 turns into 57)
-        const int MIN = 33;
-        const int MAX = 56;
-        if(n_path > MIN && n_path < MAX) {
-            printf("n=%d\tsetting to %d\n", n_path, MAX);
-            n_path = MAX;
-        }//if
-/*
-        //this here proves that the memory allocation happens for any pointer allocation, allocate >= 33 AND <= 57 and the heap corruption occurs
-        short* sptr = (short*)malloc(sizeof *sptr * 29);
-        if(sptr) {
-            free(sptr);
-            sptr = 0;
-        } else puts("error allocating iptr");
-*/
-        //if(current % 37 == 0) system("pause");
         char* path_write = (char*)malloc(sizeof *path_write * (n_path + 1));
         if(!path_write) {
             free(buffer);
@@ -271,11 +240,7 @@ int pmeg_process_internal(char* full_path) {
             pfile_destroy(&pf);
             return -1;
         }//if
-/*
-        printf("ptr addr=%p\n", &path_write);
-        printf("n=%d\n", sizeof *path_write * (n_path + 1));
-*/
-#endif
+
         *path_write = 0;
         strcpy(path_write, (*pf).root_path);
         strcat(path_write, file_name);
@@ -284,29 +249,11 @@ int pmeg_process_internal(char* full_path) {
         printf("open to write file: %s (len=%d)\n", path_write, n_path);
 */
         FILE *fp_w = fopen(path_write, "wb");
-/*
-        puts("opened for writing");
-*/
-#if USE_HEAP
-/*
-        printf("ptr addr=%p\n", &path_write);
-        puts("free path");
-*/
         free(path_write);
-/*
-        puts("path freed");
-*/
         path_write = 0;
-/*
-        puts("path 0'd\nwrite...");
-*/
-#endif
         size_t bytes_written;
         if(!fp_w) bytes_written = 0;
         else bytes_written = fwrite(buffer, sizeof *buffer, file_size, fp_w);
-/*
-        puts("check if something was written");
-*/
         if(!bytes_written) {
             free(buffer);
             pfile_destroy(&pf);
@@ -367,8 +314,6 @@ struct plinked_list* split_path(char* path) {
             } else plinked_list_did_add_node(paths, node);
             current = tmp + 1;
         } else current = 0;
-
-        //exit(0);
     }//while
 
     return paths;
@@ -388,7 +333,7 @@ bool did_create_path(struct plinked_list* paths, char* root_path) {
 
     n = n + strlen(root_path);
     assert(n > 0);
-    char* path = (char*)malloc(sizeof *path * (n + 1));
+    char* path = (char*)malloc(sizeof *path * (n + 1 + (*paths).count));
     if(!path) {
         perror(0);
         return false;
@@ -436,10 +381,11 @@ bool did_create_path(struct plinked_list* paths, char* root_path) {
 
         strcat(path, "\\");
     }//while
+
     return true;
 }
 /*
-taken from: https://modtools.petrolution.net/docs/MegFileFormat
+another meg file definition taken from: https://modtools.petrolution.net/docs/MegFileFormat
 Mega File Format
 Introduction
 

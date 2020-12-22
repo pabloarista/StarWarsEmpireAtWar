@@ -6,6 +6,7 @@ struct plinked_list* plinked_list_create(struct pnode* head, void(*destroy_val_f
     if(ll) {
         (*ll).head = (*ll).tail = head;
         (*ll).destroy_val_fn = destroy_val_fn;
+        (*ll).count = 0;
     }//if
 
     return ll;
@@ -29,6 +30,7 @@ bool plinked_list_did_insert_node(struct plinked_list* ll, struct pnode* n) {
     if(ll && (*ll).head && n) {
         (*n).next = (*ll).head;
         (*ll).head = n;
+        ++((*ll).count);
         did_insert = true;
     } else {
         did_insert = false;
@@ -41,6 +43,7 @@ bool plinked_list_did_add_node(struct plinked_list* ll, struct pnode* n) {
     if(ll && (*ll).tail && n) {
         (*(*ll).tail).next = n;
         (*ll).tail = n;
+        ++((*ll).count);
         did_add = true;
     } else {
         did_add = false;
@@ -63,6 +66,7 @@ bool plinked_list_did_remove_node(struct plinked_list* ll, struct pnode** n) {
                     if(prev) (*prev).next = (*current).next;
                     pnode_destroy(n, (*ll).destroy_val_fn);
                     did_remove = true;
+                    --((*ll).count);
                     break;
                 }//if
                 prev = current;
@@ -79,6 +83,7 @@ bool plinked_list_did_remove_head(struct plinked_list* ll) {
         struct pnode* h = (*ll).head;
         (*ll).head = (*h).next;
         pnode_destroy(&h, (*ll).destroy_val_fn);
+        --((*ll).count);
         did_remove = true;
     } else {
         did_remove = false;
@@ -95,6 +100,7 @@ bool plinked_list_did_remove_tail(struct plinked_list* ll) {
             if((*current).next == t) {
                 (*ll).tail = current;
                 (*current).next = 0;
+                --((*ll).count);
                 did_remove = true;
                 break;
             }//if
@@ -104,7 +110,7 @@ bool plinked_list_did_remove_tail(struct plinked_list* ll) {
     return did_remove;
 }
 bool plinked_list_is_empty(struct plinked_list* ll) {
-    bool is_empty = !(ll && (*ll).head);
+    bool is_empty = !(ll && (*ll).head && (*ll).count);
 
     return is_empty;
 }

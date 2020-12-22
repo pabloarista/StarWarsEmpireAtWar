@@ -8,6 +8,7 @@ struct plinked_list {
     struct pnode* head;
     struct pnode* tail;
     void(*destroy_val_fn)(void** val);
+    int count;
 };
 
 struct plinked_list* plinked_list_create(struct pnode* head, void(*destroy_val_fn)(void** val));
