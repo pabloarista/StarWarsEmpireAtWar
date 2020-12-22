@@ -1,6 +1,7 @@
 #include "pfile.h"
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 static char* pfile_get_root_path(char* file_name);
 
@@ -15,6 +16,7 @@ char* pfile_get_root_path(char* file_name) {
     char* root_path;
     if (ptr) {
         size_t n = ptr - file_name;
+        assert(n > 0);
         root_path = (char*)malloc(sizeof *root_path * (n + 1));
         if(root_path) {
             strncpy(root_path, file_name, n);
@@ -79,7 +81,8 @@ void pfile_destroy(struct pfile** pf) {
 }
 bool pfile_create_file_names(struct pfile* pf, int n) {
     bool did_create;
-    if(n) {
+    assert(n > 0);
+    if(n > 0) {
         char** file_names = (char**)malloc(sizeof *file_names * n);
         if(!file_names) did_create = false;
         else {

@@ -28,10 +28,11 @@
 
 1608464290 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pdat.h
 
-1608520453 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pfile.c
+1608620103 source:c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pfile.c
 	"pfile.h"
 	<string.h>
 	<stdlib.h>
+	<assert.h>
 
 1608464290 c:\users\beth\source\repos\starwarsempireatwar\gamedatautilities\pfile.h
 	<stdio.h>

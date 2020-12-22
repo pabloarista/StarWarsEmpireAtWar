@@ -8,6 +8,7 @@
 #include "plinked_list.h"
 #include <wchar.h>
 #include <string.h>
+#include <assert.h>
 /*
 taken from: https://www.tibed.net/editing/empireatwar/megafiles
 The container file format used by Star Wars: Empire at War is called MegaFiles. It uses the file extension MEG or .MEG. Other container file formats are ZIP and RAR, for example. However, the MEG file format does not use compression; all files are stored uncompressed inside the MEG file. A game typically consists of thousands or tens of thousands files, and by placing them into a single file, the installation times of games can be decreased. Also, the loading times of games will decrease because a single big file will be stored in a consecutive area on the hard disk, instead of the random placement that could occur with thousands of small files.
@@ -218,8 +219,8 @@ int pmeg_process_internal(char* full_path) {
         }//if
         rewind(fp);
         fseek(fp, file_offset, SEEK_SET);
-
         bytes_read = fread(buffer, sizeof *buffer, file_size, fp);
+
         int ferr = ferror(fp);
         int fend = feof(fp);
         bool read_eq = bytes_read == file_size;
@@ -342,6 +343,7 @@ struct plinked_list* split_path(char* path) {
         char* tmp = strchr(current, '\\');
         if (tmp) {
             size_t n = tmp - current;
+            assert(n > 0);
             char* slice = (char*)malloc(sizeof *slice * (n + 1));
             if(!slice) {
                 plinked_list_destroy(&paths);
@@ -385,6 +387,7 @@ bool did_create_path(struct plinked_list* paths, char* root_path) {
     if(!n) return false;
 
     n = n + strlen(root_path);
+    assert(n > 0);
     char* path = (char*)malloc(sizeof *path * (n + 1));
     if(!path) {
         perror(0);
@@ -398,6 +401,7 @@ bool did_create_path(struct plinked_list* paths, char* root_path) {
         if(node && (*node).val) {
             strcat(path, (char*)(*node).val);
             size_t len = strlen(path) + 1;
+            assert(len > 0);
             wchar_t* dir = (wchar_t*)malloc(sizeof *dir * len);
             if(!dir) {
                 free(path);
