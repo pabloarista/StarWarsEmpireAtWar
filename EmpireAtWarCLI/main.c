@@ -42,6 +42,12 @@ int main(int argc, char** argv) {
     signal(SIGTERM, signal_handler);
     signal(SIGBREAK, signal_handler);
     signal(SIGABRT, signal_handler);
+    char* test = (char*)malloc(50);
+    if(test) {
+        strcpy(test, "hello world!");
+        puts(test);
+        free(test);
+    }//if
 #if !TEST
 #warning TODO:we could other options: 1) add file to meg file 2) create meg file with a list of files or a directory to add
     if (argc < 2) {
