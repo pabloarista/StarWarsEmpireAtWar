@@ -110,7 +110,7 @@ bool plinked_list_did_remove_tail(struct plinked_list* ll) {
     return did_remove;
 }
 bool plinked_list_is_empty(struct plinked_list* ll) {
-    bool is_empty = !(ll && (*ll).head && (*ll).count);
+    bool is_empty = !(ll && (*ll).head /*&& (*ll).count*/);
 
     return is_empty;
 }
