@@ -1,11 +1,11 @@
 #include "pnode.h"
 #include <stdlib.h>
 
-struct pnode* pnode_create(void* val, struct pnode* next) {
+struct pnode* pnode_create(void* val) {
     struct pnode* node = (struct pnode*)malloc(sizeof *node);
     if(node) {
         (*node).val = val;
-        (*node).next = next;
+        (*node).next = 0;
     }//if
 
     return node;

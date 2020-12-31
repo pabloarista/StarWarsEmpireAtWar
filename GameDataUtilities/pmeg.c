@@ -299,7 +299,7 @@ struct plinked_list* split_path(char* path) {
             strncpy(slice, current, n);
             *(slice + n) = 0;
 
-            struct pnode* node = pnode_create(slice, 0);
+            struct pnode* node = pnode_create(slice);
             if(!node) {
                 free(slice);
                 plinked_list_destroy(&paths);
